@@ -8,8 +8,10 @@ import numpy as np
 import yfinance as yf
 
 
-text_name = "c:/Users/manaby/Documents/python/stock_price.txt"
-data_j_name = "c:/Users/manaby/Documents/python/data_j.xls"
+text_name2 = "c:/Users/manaby/Documents/python/stock_price.txt"
+data_j_name2 = "c:/Users/manaby/Documents/python/data_j.xls"
+text_name = "stock_price.txt"
+data_j_name = "data_j.xls"
 
 with open(text_name,"r") as f:
         stock_file_data = f.read()
@@ -67,18 +69,22 @@ for i in range(len(t_test)):
 #print("正解率", str(correct / (correct + wrong) * 100), "％")
 
 
-data_j = data_j[["コード","銘柄名"]]
+
+
+data_j = data_j[["コード","銘柄名"]]#銘柄エクセルファイルを辞書型にする
 #Stock_name = st.text_input("銘柄：")
-list_meigara = data_j["銘柄名"].unique()
+list_meigara = data_j["銘柄名"].unique()#銘柄リスト
 
-kouho_name = st.selectbox("銘柄：",list_meigara)
+kouho_name = st.selectbox("銘柄：",list_meigara)#株価を見たい銘柄インプット
 
-meigara_code_list = data_j["コード"].unique()
+meigara_code_list = data_j["コード"].unique()#銘柄コードリスト
+
 
 Stock_Code = ""
 kazu = 0
 flag = True
 
+#銘柄からコードを摘出※要修正
 while flag:
     if kouho_name == "":
          flag = False
@@ -92,19 +98,12 @@ while flag:
     
 Stock_Code = str(Stock_Code) + ".T"
 
-#"USDJPY=X"
 
 stockstock = yf.Ticker(Stock_Code)
+#株価表示
 if st.checkbox(""):
     STOCK_download = yf.download(Stock_Code,end="2025-04-20",start="2024-04-01")
     df = pd.DataFrame(STOCK_download)
-
-#sdata = STOCK_download["Close"].values
-#date = STOCK_download.index
-#pl.plot(date,sdata)
-#pl.show()
-
-
 
     st.dataframe(df.style.highlight_max(axis=0))
 st.write(Stock_Code)
