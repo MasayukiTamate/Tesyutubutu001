@@ -1,0 +1,77 @@
+from sklearn import svm
+from sklearn.model_selection import train_test_split
+import pandas as pd
+import matplotlib.pyplot as plt
+import streamlit as st
+import numpy as np
+import yfinance as yf
+
+"変更する予定"
+
+text_name = "c:/Users/manaby/Documents/python/stock_price.txt"
+
+
+with open(text_name,"r") as f:
+        stock_file_data = f.read()
+
+stock_file_data = stock_file_data.split()
+stock_data = []
+for stock_string in stock_file_data:
+        stock_data.append(float(stock_string))
+
+#print("株価",stock_data)
+n_price = len(stock_data)
+#print("データ数",n_price)
+
+ratio_data = []
+for i in range(1, n_price):
+    ratio_data.append(float(stock_data[i] - stock_data[i - 1]) / float(stock_data[i - 1]))
+
+n_ratio = len(ratio_data)
+#print("変化率",ratio_data)
+
+successive_data = []
+answers = []
+for i in range(4,n_ratio):
+    successive_data.append([ratio_data[i-4], ratio_data[i-3],ratio_data[i-2],ratio_data[i-1]])
+    if ratio_data[i] > 0:
+        answers.append(1)
+    else:
+        answers.append(0)
+#print("4日連続の変化率", successive_data)
+#print("正解", answers)
+
+x_train, x_test, t_train, t_test = train_test_split(successive_data, answers, shuffle=False)
+
+clf = svm.SVC()
+clf.fit(x_train, t_train)
+
+y_test = clf.predict(x_test)
+
+a = -20
+b = a + 10
+
+#print("正解", t_test[a:b])
+#print("予測", y_test[a:b])
+
+correct = 0.0
+wrong = 0.0
+for i in range(len(t_test)):
+    if y_test[i] == t_test[i]:
+        correct += 1.0
+    else:
+        wrong += 1.0
+
+#print("正解率", str(correct / (correct + wrong) * 100), "％")
+
+
+aapl = yf.Ticker("APLL")
+
+#df = pd.DataFrame(aapl.history())
+#st.dataframe(df.style.highlight_max(axis=0))
+
+
+STOCK_download = yf.download(tickers="USDJPY=X",period="max",end="2025-04-20",start="2025-04-01")
+print(STOCK_download)
+#df = pd.DataFrame(aapl.history())
+#print(df.loc)
