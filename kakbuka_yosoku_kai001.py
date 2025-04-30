@@ -1,18 +1,20 @@
 from sklearn import svm
 from sklearn.model_selection import train_test_split
 import pandas as pd
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
+from matplotlib import pyplot as pl
 import streamlit as st
 import numpy as np
 import yfinance as yf
 
-"変更する予定"
 
 text_name = "c:/Users/manaby/Documents/python/stock_price.txt"
-
+data_j_name = "c:/Users/manaby/Documents/python/data_j.xls"
 
 with open(text_name,"r") as f:
         stock_file_data = f.read()
+
+data_j = pd.read_excel(data_j_name,sheet_name=0, index_col=0)
 
 stock_file_data = stock_file_data.split()
 stock_data = []
@@ -65,13 +67,44 @@ for i in range(len(t_test)):
 #print("正解率", str(correct / (correct + wrong) * 100), "％")
 
 
-aapl = yf.Ticker("APLL")
+data_j = data_j[["コード","銘柄名"]]
+#Stock_name = st.text_input("銘柄：")
+list_meigara = data_j["銘柄名"].unique()
 
-#df = pd.DataFrame(aapl.history())
-#st.dataframe(df.style.highlight_max(axis=0))
+kouho_name = st.selectbox("銘柄：",list_meigara)
+
+meigara_code_list = data_j["コード"].unique()
+
+Stock_Code = ""
+kazu = 0
+flag = True
+
+while flag:
+    if kouho_name == "":
+         flag = False
+    if kouho_name == str(list_meigara[kazu]):
+          Stock_Code = meigara_code_list[kazu]
+          flag = False
+    if kazu+1 >= len(meigara_code_list):
+         flag = False
+    else:
+        kazu = kazu + 1
+    
+Stock_Code = str(Stock_Code) + ".T"
+
+#"USDJPY=X"
+
+stockstock = yf.Ticker(Stock_Code)
+if st.checkbox(""):
+    STOCK_download = yf.download(Stock_Code,end="2025-04-20",start="2024-04-01")
+    df = pd.DataFrame(STOCK_download)
+
+#sdata = STOCK_download["Close"].values
+#date = STOCK_download.index
+#pl.plot(date,sdata)
+#pl.show()
 
 
-STOCK_download = yf.download(tickers="USDJPY=X",period="max",end="2025-04-20",start="2025-04-01")
-print(STOCK_download)
-#df = pd.DataFrame(aapl.history())
-#print(df.loc)
+
+    st.dataframe(df.style.highlight_max(axis=0))
+st.write(Stock_Code)
