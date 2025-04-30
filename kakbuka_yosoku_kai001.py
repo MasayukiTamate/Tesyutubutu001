@@ -6,7 +6,7 @@ from matplotlib import pyplot as pl
 import streamlit as st
 import numpy as np
 import yfinance as yf
-
+import datetime
 
 text_name2 = "c:/Users/manaby/Documents/python/stock_price.txt"
 data_j_name2 = "c:/Users/manaby/Documents/python/data_j.xls"
@@ -95,14 +95,21 @@ while flag:
          flag = False
     else:
         kazu = kazu + 1
-    
+
+now_date = datetime.date(2025,4,30)
+max_date = now_date
+end_date = st.date_input("この日まで表示：",now_date)
+start_date =  end_date + datetime.timedelta(days=-10)
+
+     
+
 Stock_Code = str(Stock_Code) + ".T"
 
 
 stockstock = yf.Ticker(Stock_Code)
 #株価表示
 if st.checkbox(""):
-    STOCK_download = yf.download(Stock_Code,end="2025-04-20",start="2024-04-01")
+    STOCK_download = yf.download(Stock_Code,end=end_date,start=start_date)
     df = pd.DataFrame(STOCK_download)
 
     st.dataframe(df.style.highlight_max(axis=0))
