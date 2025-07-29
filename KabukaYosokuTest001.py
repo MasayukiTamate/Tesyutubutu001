@@ -100,14 +100,48 @@ max_date = now_date
 start_date = st.date_input("この日から表示：",now_date)
 end_date = st.date_input("この日まで表示：",now_date)
      
-
+cl = []
+cl2 = ['終わり','閉じ','高い','低い','開く','値']
 Stock_Code = str(Stock_Code) + ".T"
 stockstock = yf.Ticker(Stock_Code)
 #株価表示
+data = []
 if st.checkbox(""):
     STOCK_download = yf.download(Stock_Code,end=end_date,start=start_date)
     df = pd.DataFrame(STOCK_download)
+    data = list(df)
+#関数化予定
+    for i in df.columns:
+         n = True
+         for j in i:
+            if n:
+                cl.append(j)
+                n = False
+            else:
+                n = True
+            
+    m = 0
 
+    for i,j in zip(cl,cl2):
+        df.rename(columns={i:j},inplace=True)
+         
+
+#データフレームを表示
     st.dataframe(df.style.highlight_max(axis=0))
+    
+    m = 0
+    for i in df.columns:
+        n = True
+         
+        for j in i:
+            if n:
+                i = cl[m]
+                n = False
+            else:
+                n = True
+        m = m + 1
+#関数化予定終わり
+         
+print(data) 
 
 st.write(Stock_Code)
