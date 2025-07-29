@@ -109,7 +109,9 @@ data = []
 if st.checkbox(""):
     STOCK_download = yf.download(Stock_Code,end=end_date,start=start_date)
     df = pd.DataFrame(STOCK_download)
-    data = list(df)
+
+
+#列名を変更して元に戻す
 #関数化予定
     for i in df.columns:
          n = True
@@ -127,7 +129,8 @@ if st.checkbox(""):
          
 
 #データフレームを表示
-    st.dataframe(df.style.highlight_max(axis=0))
+    st.dataframe(df.style.format("{:.2f}"),df.style.highlight_max(axis=0))
+#    st.dataframe()
     
     m = 0
     for i in df.columns:
@@ -141,7 +144,5 @@ if st.checkbox(""):
                 n = True
         m = m + 1
 #関数化予定終わり
-         
-print(data) 
 
 st.write(Stock_Code)
