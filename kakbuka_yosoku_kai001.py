@@ -97,7 +97,7 @@ while flag:
     else:
         kazu = kazu + 1
 
-now_date = datetime.date(2025,4,30)
+now_date = datetime.date(2025,8,1)
 max_date = now_date
 start_date = st.date_input("この日から表示：",now_date)
 end_date = st.date_input("この日まで表示：",now_date)

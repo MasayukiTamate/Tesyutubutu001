@@ -67,14 +67,15 @@ for i in range(len(t_test)):
         wrong += 1.0
 
 
-
+st.title = "株価表示～日付指定～"
+st.header("株価表示～日付指定～")
 
 
 #銘柄名からこ銘柄コードを代入する為の前準備
 data_j = data_j[["コード","銘柄名"]]#銘柄エクセルファイルを辞書型にする
 list_meigara = data_j["銘柄名"].unique()#銘柄リスト
 kouho_name = st.selectbox("銘柄：",list_meigara)#株価を見たい銘柄インプット
-meigara_code_list = data_j["コード"].unique()#銘柄コードリスト
+meigara_code_list = data_j["コード"].unique()#銘柄コードのリスト
 
 
 #銘柄からコードを摘出※要修正
@@ -129,7 +130,7 @@ if st.checkbox(""):
          
 
 #データフレームを表示
-    st.dataframe(df.style.format("{:.2f}"),df.style.highlight_max(axis=0))
+    st.dataframe(df.style.format("{:.2f}"))
 #    st.dataframe()
     
     m = 0
@@ -143,6 +144,6 @@ if st.checkbox(""):
             else:
                 n = True
         m = m + 1
-#関数化予定終わり
+#関数化～予定終わり
 
-st.write(Stock_Code)
+st.write(cl)
