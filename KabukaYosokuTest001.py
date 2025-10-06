@@ -10,8 +10,10 @@ import datetime
 import time
 
 #フォルダ名文字列
-text_name2  = "c:/Users/横浜関内駅前事業所/Documents/python/stock_price.txt"
-data_j_name2 = "C:/Users/横浜関内駅前事業所/Documents/python/data_j.xls"
+text_name2  = "c:/Users/横浜関内駅前事業所/Documents/python/" + "stock_price.txt"
+data_j_name2 = "C:/Users/横浜関内駅前事業所/Documents/python/" + "data_j.xls"
+text_name2 = "stock_price.txt"
+data_j_name2 = "data_j.xls"
 
 #エクセルとテキストのデータを読み込む
 with open(text_name2,"r") as f:
@@ -97,17 +99,27 @@ while flag:#ループ※何のループか
 #表示する範囲の日にちインプット
 dt_now = datetime.datetime.now()
 now_date = datetime.date(dt_now.year,dt_now.month,dt_now.day)
+
+if dt_now.day - 7 < 1 :
+    day = 30 + (dt_now.day - 7)
+    month = dt_now.month -1
+if month < 1:
+    month = 12
+befor = datetime.date(dt_now.year, month, day)
 max_date = now_date
-start_date = st.date_input("この日から表示：",now_date)
+start_date = st.date_input("この日から表示：",befor)
 end_date = st.date_input("この日まで表示：",now_date)
      
 cl = []
-cl2 = ['終わり','閉じ','高い','低い','開く','値']
+cl2 = ['最終','最高','最低','開始','値']
 Stock_Code = str(Stock_Code) + ".T"
 stockstock = yf.Ticker(Stock_Code)
 #株価表示
 data = []
-if st.checkbox(""):
+
+ckBox = st.checkbox("",value= True,key = 1)
+
+if ckBox:
     STOCK_download = yf.download(Stock_Code,end=end_date,start=start_date)
     df = pd.DataFrame(STOCK_download)
 
@@ -144,6 +156,5 @@ if st.checkbox(""):
             else:
                 n = True
         m = m + 1
-#関数化～予定終わり
+#関数化～予定
 
-st.write(cl)
