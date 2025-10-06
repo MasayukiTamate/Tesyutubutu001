@@ -1,0 +1,8 @@
+train_test_split
+pandas
+matplotlib
+streamlit
+numpy
+yfinance
+datetime
+time

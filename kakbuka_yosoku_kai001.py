@@ -10,14 +10,18 @@ import datetime
 
 text_name2 = "c:/Users/manaby/Documents/python/stock_price.txt"
 data_j_name2 = "c:/Users/manaby/Documents/python/data_j.xls"
-text_name = "stock_price.txt"
-data_j_name = "data_j.xls"
+
 text_name2  = "c:/Users/横浜関内駅前事業所/Documents/python/stock_price.txt"
 data_j_name2 = "C:/Users/横浜関内駅前事業所/Documents/python/data_j.xls"
-with open(text_name2,"r") as f:
+
+text_name = "stock_price.txt"
+data_j_name = "data_j.xls"
+
+
+with open(text_name,"r") as f:
         stock_file_data = f.read()
 
-data_j = pd.read_excel(data_j_name2,sheet_name=0, index_col=0)
+data_j = pd.read_excel(data_j_name,sheet_name=0, index_col=0)
 
 stock_file_data = stock_file_data.split()
 stock_data = []
