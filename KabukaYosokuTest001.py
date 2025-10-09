@@ -107,6 +107,7 @@ if dt_now.day - 7 < 1 :
     month = dt_now.month -1
 if month < 1:
     month = 12
+print(f"{month=} {day=}")
 befor = datetime.date(dt_now.year, month, day)
 max_date = now_date
 start_date = st.date_input("この日から表示：",befor)
