@@ -101,7 +101,7 @@ dt_now = datetime.datetime.now()
 now_date = datetime.date(dt_now.year,dt_now.month,dt_now.day)
 
 month = dt_now.month
-day = dt_now.day
+day = dt_now.day - 7
 if dt_now.day - 7 < 1 :
     day = 30 + (dt_now.day - 7)
     month = dt_now.month -1
